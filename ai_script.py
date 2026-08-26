@@ -3,7 +3,7 @@ import requests
 
 api_key = os.environ.get("GOROUTER_API_KEY")
 
-url = "https://gorouter.app/v1/chat/completions"
+url = "https://api.gorouter.app/v1/chat/completions"
 
 headers = {
     "Content-Type": "application/json",
