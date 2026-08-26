@@ -10,18 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install Dependencies
-        run: pip install requests
-
-      - name: Run AI Script
+      - name: Run AI with curl
         env:
           GOROUTER_API_KEY: ${{ secrets.GOROUTER_API_KEY }}
-        run: python ai_script.py
+        run: |
+          curl -s -X POST https://gorouter.app/v1/chat/completions \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $GOROUTER_API_KEY" \
+            -A "curl/7.88.1" \
+            -d '{
+              "model": "claude-opus-5-thinking",
+              "messages": [{"role": "user", "content": "Say hello in one sentence."}]
+            }'
